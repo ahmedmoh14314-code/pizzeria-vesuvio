@@ -1,0 +1,909 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .input {
+    @apply rounded-none border border-stone-300 bg-stone-50 px-4 py-2 text-sm transition-all duration-300 placeholder:text-stone-400 focus:outline-none focus:ring focus:ring-yellow-400 md:px-6 md:py-3;
+  }
+
+  /* https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
+  .loader {
+    width: 45px;
+    aspect-ratio: 0.75;
+    --c: no-repeat linear-gradient(theme(colors.stone.800) 0 0);
+    background: var(--c) 0% 50%, var(--c) 50% 50%, var(--c) 100% 50%;
+    background-size: 20% 50%;
+    animation: loading 1s infinite linear;
+  }
+
+  @keyframes loading {
+    20% {
+      background-position: 0% 0%, 50% 50%, 100% 50%;
+    }
+    40% {
+      background-position: 0% 100%, 50% 0%, 100% 50%;
+    }
+    60% {
+      background-position: 0% 50%, 50% 100%, 100% 0%;
+    }
+    80% {
+      background-position: 0% 50%, 50% 50%, 100% 100%;
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   Pizzeria Vesuvio
+
+   Everything below restyles the app without touching a line of JSX.
+   The markup keeps its Tailwind classes; these rules sit after the
+   utilities in the cascade and win on specificity where they need to.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  --dough: #f4ecdd;
+  --paper: #fbf7ee;
+  --crust: #e4d8bf;
+  --tomato: #b3261e;
+  --tomato-dark: #8e1d16;
+  --basil: #2f5d3a;
+  --char: #241c16;
+  --gold: #c8922f;
+}
+
+/* ── The table the menu sits on ──────────────────────────────────── */
+
+body {
+  background-color: var(--dough);
+  /* Flour dusted on a board: two offset dot grids, barely there. */
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(36, 28, 22, 0.045) 1px, transparent 0),
+    radial-gradient(circle at 1px 1px, rgba(36, 28, 22, 0.03) 1px, transparent 0);
+  background-size: 22px 22px, 37px 37px;
+  background-position: 0 0, 11px 18px;
+  letter-spacing: 0.01em;
+}
+
+/* ── Header: a checked tablecloth ────────────────────────────────── */
+
+header {
+  position: relative;
+  border-bottom: 3px solid var(--char) !important;
+  /* Gingham. Two translucent red bands crossing over white leave the
+     darker squares where they overlap, exactly like woven cloth. */
+  background-color: #fffdf8 !important;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      rgba(179, 38, 30, 0.8) 0 16px,
+      transparent 16px 32px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(179, 38, 30, 0.8) 0 16px,
+      transparent 16px 32px
+    );
+  padding-top: 1.25rem !important;
+  padding-bottom: 1.25rem !important;
+  gap: 1rem;
+}
+
+/* A scalloped valance hanging under the cloth. */
+header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -14px;
+  height: 14px;
+  background-image: radial-gradient(
+    circle at 9px -2px,
+    var(--char) 9px,
+    transparent 10px
+  );
+  background-size: 18px 14px;
+  background-repeat: repeat-x;
+  pointer-events: none;
+}
+
+/* ── The name, set as a painted sign ─────────────────────────────── */
+
+header > a {
+  position: relative;
+  z-index: 1;
+  display: block;
+  padding: 0.5rem 1.1rem 0.6rem;
+  font-size: 0 !important;
+  letter-spacing: 0 !important;
+  line-height: 1;
+  flex-shrink: 0;
+  text-decoration: none;
+  background-color: var(--char);
+  border: 2px solid var(--paper);
+  outline: 2px solid var(--char);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.35);
+}
+
+header > a::before {
+  content: 'Pizzeria';
+  display: block;
+  font-family: Lora, Georgia, serif;
+  font-style: italic;
+  font-size: 0.82rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+  line-height: 1;
+}
+
+header > a::after {
+  content: 'VESUVIO';
+  display: block;
+  font-family: Bevan, Georgia, serif;
+  font-size: 1.6rem;
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  color: var(--paper);
+}
+
+/* The search field and the name sit on the cloth, so they need a card. */
+header .input,
+header input {
+  position: relative;
+  z-index: 1;
+  background-color: var(--paper) !important;
+  border: 2px solid var(--char) !important;
+  border-radius: 0 !important;
+  box-shadow: 2px 2px 0 rgba(36, 28, 22, 0.35);
+  font-style: italic;
+}
+
+/* The guest's name is a paper tag pinned to the cloth. A second black
+   plaque would only have echoed the sign; paper contrasts with it. */
+header > div:last-child,
+header > p:last-child {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  font-family: Bevan, Georgia, serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  color: var(--char);
+  background-color: var(--paper);
+  border: 1px solid var(--crust);
+  padding: 0.85rem 1.1rem 0.6rem 1.1rem;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.28), 0 6px 14px rgba(0, 0, 0, 0.22);
+  text-decoration: none;
+  transform: rotate(-2.2deg);
+  transition: transform 0.25s ease;
+}
+
+header > div:last-child:hover {
+  transform: rotate(0deg);
+}
+
+/* Written above the name in the waiter's hand. */
+header > div:last-child::before {
+  content: 'ospite';
+  display: block;
+  font-family: Lora, Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: lowercase;
+  color: var(--tomato);
+  margin-bottom: 0.3rem;
+}
+
+/* The pin holding it up. */
+header > div:last-child::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  width: 11px;
+  height: 11px;
+  margin-left: -5.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #e8564a, var(--tomato) 60%, var(--tomato-dark));
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Headings ────────────────────────────────────────────────────── */
+
+h1 {
+  font-family: Bevan, Georgia, serif !important;
+  font-weight: 400 !important;
+  line-height: 1.18 !important;
+  color: var(--char);
+  letter-spacing: 0.01em;
+}
+
+h1 span {
+  color: var(--tomato) !important;
+}
+
+/* A rule with a diamond in the middle, the way a printed menu breaks a
+   heading from what follows. */
+h1::after {
+  content: '';
+  display: block;
+  width: 190px;
+  height: 14px;
+  margin: 1.5rem auto 0;
+  background-image:
+    linear-gradient(var(--crust), var(--crust)),
+    linear-gradient(var(--crust), var(--crust)),
+    radial-gradient(circle, var(--tomato) 4px, transparent 5px);
+  background-size: 78px 2px, 78px 2px, 14px 14px;
+  background-position: left center, right center, center center;
+  background-repeat: no-repeat;
+}
+
+h2 {
+  font-family: Bevan, Georgia, serif !important;
+  font-weight: 400 !important;
+  color: var(--char);
+}
+
+/* ── The menu, set like a printed card ───────────────────────────── */
+
+main {
+  padding-bottom: 2rem;
+}
+
+main > ul {
+  margin-top: 1.5rem;
+  background-color: var(--paper);
+  border: 2px solid var(--char);
+  box-shadow: 6px 6px 0 rgba(36, 28, 22, 0.16);
+  padding: 0.5rem 1.4rem 1.2rem !important;
+}
+
+/* A printed menu names itself at the top. */
+main > ul::before {
+  content: 'Il Menu';
+  display: block;
+  font-family: Bevan, Georgia, serif;
+  font-size: 1.5rem;
+  text-align: center;
+  color: var(--char);
+  padding: 1rem 0 0.35rem;
+}
+
+main > ul::after {
+  content: '';
+  display: block;
+  height: 0;
+  border-bottom: 2px dashed var(--crust);
+  margin: 0.8rem 0 0.2rem;
+}
+
+main > ul > li {
+  padding: 1.5rem 0 !important;
+  gap: 1.5rem !important;
+  border-color: var(--crust) !important;
+  align-items: center;
+}
+
+/* Pizzas photograph round. */
+main > ul > li > img {
+  width: 9rem !important;
+  height: 9rem !important;
+  object-fit: cover;
+  border-radius: 50%;
+  /* A pizza on a plate: dark crust edge, then a ring of white china. */
+  border: 4px solid var(--char);
+  box-shadow:
+    0 0 0 7px var(--paper),
+    0 0 0 9px var(--crust),
+    0 6px 0 rgba(36, 28, 22, 0.18);
+  flex-shrink: 0;
+  margin: 0.55rem 0.9rem 0.55rem 0.35rem;
+  transition: transform 0.25s ease;
+}
+
+main > ul > li:hover > img {
+  transform: rotate(-4deg) scale(1.03);
+}
+
+main > ul > li p:first-child {
+  font-family: Bevan, Georgia, serif;
+  font-size: 1.32rem;
+  font-weight: 400;
+  color: var(--char);
+  letter-spacing: 0.01em;
+}
+
+main > ul > li p.italic {
+  color: var(--tomato-dark) !important;
+  font-size: 0.92rem;
+  opacity: 0.88;
+  margin-top: 0.2rem;
+}
+
+/* The price row of a menu: name, a run of dots, then the figure. */
+main > ul > li > div > div {
+  position: relative;
+  margin-top: 0.55rem;
+  padding-top: 0.5rem;
+}
+
+main > ul > li > div > div::before {
+  content: '';
+  position: absolute;
+  top: 0.9rem;
+  left: 0;
+  right: 0;
+  border-top: 2px dotted var(--crust);
+}
+
+main > ul > li > div > div > p {
+  position: relative;
+  z-index: 1;
+  background-color: var(--paper);
+  padding-right: 0.6rem;
+  font-family: Lora, Georgia, serif;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--tomato);
+}
+
+main > ul > li > div > div > a,
+main > ul > li > div > div > button {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Buttons: stamped, not rounded ───────────────────────────────── */
+
+a[class*='rounded-full'],
+button[class*='rounded-full'] {
+  border-radius: 2px !important;
+  font-family: Bevan, Georgia, serif !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.06em !important;
+  color: var(--paper) !important;
+  border: 2px solid var(--char) !important;
+  box-shadow: 3px 3px 0 var(--char);
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    background-color 0.18s ease;
+}
+
+a[class*='rounded-full']:hover,
+button[class*='rounded-full']:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 var(--char);
+}
+
+a[class*='rounded-full']:active,
+button[class*='rounded-full']:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--char);
+}
+
+/* The outline variant keeps the paper ground. */
+button[class*='border-stone-300'],
+a[class*='border-stone-300'] {
+  background-color: var(--paper) !important;
+  color: var(--char) !important;
+}
+
+/* ── Back to the menu ────────────────────────────────────────────
+   It was a plain blue link in the corner, easy to miss. It is now a
+   paper tab in basil green, stamped like the other controls but quiet
+   enough that it never competes with Order. */
+
+a[class*='text-blue-500'],
+button[class*='text-blue-500'] {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+
+  font-family: Bevan, Georgia, serif !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--basil) !important;
+  text-decoration: none !important;
+
+  background-color: var(--paper);
+  border: 2px solid var(--basil);
+  border-radius: 3px;
+  padding: 0.55rem 1rem 0.5rem 0.85rem;
+  box-shadow: 3px 3px 0 var(--basil);
+
+  transition: transform 0.14s ease, box-shadow 0.14s ease,
+    background-color 0.18s ease, color 0.18s ease;
+}
+
+a[class*='text-blue-500']:hover,
+button[class*='text-blue-500']:hover {
+  background-color: var(--basil);
+  color: var(--paper) !important;
+  /* Slides back the way the arrow points. */
+  transform: translate(-2px, 1px);
+  box-shadow: 4px 2px 0 rgba(31, 66, 39, 0.55);
+}
+
+a[class*='text-blue-500']:active,
+button[class*='text-blue-500']:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--basil);
+}
+
+/* ── The running total: a till receipt ───────────────────────────── */
+
+/* ── The order docket, spiked in the corner ──────────────────────
+   The bar across the bottom of the screen is now a paper ticket that
+   swings in when the first pizza lands in the cart, the way a docket
+   is clipped up over the pass. */
+
+.grid > div[class*="bg-stone-800"] {
+  position: fixed !important;
+  right: 1.6rem;
+  bottom: 1.6rem;
+  z-index: 60;
+
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 0.55rem;
+  width: 13.5rem;
+  padding: 0.9rem 1.1rem 1.5rem !important;
+
+  background-color: var(--paper) !important;
+  color: var(--char) !important;
+  border: 1px solid var(--crust) !important;
+  border-top: 5px solid var(--tomato) !important;
+  box-shadow: 0 10px 0 rgba(36, 28, 22, 0.1), 0 14px 34px rgba(36, 28, 22, 0.33);
+
+  font-family: Lora, Georgia, serif !important;
+  text-transform: none !important;
+  letter-spacing: 0;
+
+  transform-origin: 88% -26px;
+  animation: docket-in 0.62s cubic-bezier(0.34, 1.56, 0.64, 1) 1 both,
+    docket-nudge 6.5s ease-in-out 2.4s infinite;
+}
+
+/* The spike the ticket hangs on. */
+.grid > div[class*="bg-stone-800"]::after {
+  content: '';
+  position: absolute;
+  top: -13px;
+  right: 1.3rem;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 28%, #6c6257, var(--char) 65%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
+}
+
+/* Torn along the bottom, like paper off a roll. */
+.grid > div[class*="bg-stone-800"]::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 9px;
+  background-image:
+    linear-gradient(-45deg, transparent 50%, var(--paper) 51%),
+    linear-gradient(45deg, transparent 50%, var(--paper) 51%);
+  background-size: 14px 9px;
+  background-position: bottom;
+  background-repeat: repeat-x;
+}
+
+/* The count and the money, stacked like a bill. */
+.grid > div[class*="bg-stone-800"] p {
+  display: flex !important;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin: 0 !important;
+  color: var(--char) !important;
+  font-weight: 400 !important;
+}
+
+.grid > div[class*="bg-stone-800"] p span:first-child {
+  font-family: Lora, Georgia, serif;
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--tomato-dark);
+}
+
+.grid > div[class*="bg-stone-800"] p span:first-child::before {
+  content: '🍕 ';
+}
+
+.grid > div[class*="bg-stone-800"] p span:last-child {
+  font-family: Bevan, Georgia, serif;
+  font-size: 1.5rem;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--char);
+}
+
+/* A dotted rule between the total and the way out. */
+.grid > div[class*="bg-stone-800"] a {
+  display: block;
+  padding-top: 0.6rem;
+  border-top: 2px dotted var(--crust);
+  font-family: Bevan, Georgia, serif;
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tomato) !important;
+  text-decoration: none;
+  transition: color 0.18s ease, letter-spacing 0.18s ease;
+}
+
+.grid > div[class*="bg-stone-800"] a:hover {
+  color: var(--tomato-dark) !important;
+  letter-spacing: 0.1em;
+}
+
+.grid > div[class*="bg-stone-800"]:hover {
+  animation-play-state: paused;
+}
+
+@keyframes docket-in {
+  0% {
+    opacity: 0;
+    transform: rotate(-18deg) translateY(-22px);
+  }
+  60% {
+    opacity: 1;
+    transform: rotate(4deg) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(-1.4deg) translateY(0);
+  }
+}
+
+/* Every few seconds it swings, the way paper does when the door opens. */
+@keyframes docket-nudge {
+  0%,
+  86%,
+  100% {
+    transform: rotate(-1.4deg);
+  }
+  90% {
+    transform: rotate(-5deg);
+  }
+  94% {
+    transform: rotate(1.6deg);
+  }
+  97% {
+    transform: rotate(-2.4deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid > div[class*="bg-stone-800"] {
+    right: 0.9rem;
+    bottom: 0.9rem;
+    width: 11.5rem;
+  }
+}
+
+/* ── Forms and the cart ──────────────────────────────────────────── */
+
+main form {
+  background-color: var(--paper);
+  border: 2px solid var(--char);
+  box-shadow: 6px 6px 0 rgba(36, 28, 22, 0.16);
+  padding: 1.6rem 1.4rem;
+  margin-top: 1.2rem;
+}
+
+main > div > ul {
+  background-color: var(--paper);
+  border: 2px solid var(--char);
+  box-shadow: 6px 6px 0 rgba(36, 28, 22, 0.16);
+  padding: 0.4rem 1.2rem !important;
+  border-bottom-width: 2px !important;
+}
+
+main > div > ul > li {
+  border-color: var(--crust) !important;
+}
+
+main > div > ul > li > p {
+  font-family: Bevan, Georgia, serif;
+  font-size: 0.95rem;
+  color: var(--char);
+}
+
+main > div > ul > li > div > p {
+  font-family: Lora, Georgia, serif;
+  font-weight: 600;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--tomato);
+}
+
+/* ── Small screens ───────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  header > a::after {
+    font-size: 1.2rem;
+  }
+
+  header > a::before {
+    font-size: 0.68rem;
+    letter-spacing: 0.26em;
+  }
+
+  main > ul {
+    padding-left: 0.9rem !important;
+    padding-right: 0.9rem !important;
+  }
+
+  main > ul > li > img {
+    width: 5.8rem !important;
+    height: 5.8rem !important;
+    box-shadow:
+      0 0 0 5px var(--paper),
+      0 0 0 6px var(--crust),
+      0 4px 0 rgba(36, 28, 22, 0.18);
+  }
+
+  main > ul > li p:first-child {
+    font-size: 1.08rem;
+  }
+
+  main > ul > li {
+    gap: 1rem !important;
+    padding: 1.2rem 0 !important;
+  }
+
+  /* The price, the stamp and the button stop competing for one line. */
+  main > ul > li > div > div {
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    row-gap: 0.9rem;
+  }
+
+  /* Dotted leaders need a line to run along; there is not one here. */
+  main > ul > li > div > div::before {
+    display: none;
+  }
+
+  main > ul > li > div > div > p {
+    padding-right: 0;
+  }
+
+  /* Less tilt, so the stamp keeps clear of what sits beside it. */
+  main > ul > li > div > div > p.uppercase {
+    transform: rotate(-3deg);
+    margin-right: 0.4rem;
+  }
+
+  main > ul > li > div > div > a,
+  main > ul > li > div > div > button {
+    margin-left: auto;
+    white-space: nowrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
+
+/* ── A rubber stamp for the ones that have run out ───────────────── */
+
+main > ul > li > div > div > p.uppercase {
+  display: inline-block;
+  font-family: Bevan, Georgia, serif;
+  font-size: 0.78rem !important;
+  letter-spacing: 0.1em;
+  color: var(--tomato) !important;
+  border: 2.5px solid var(--tomato);
+  border-radius: 3px;
+  padding: 0.25rem 0.7rem 0.3rem;
+  transform: rotate(-5deg);
+  opacity: 0.78;
+  background-color: transparent;
+}
+
+/* ── Close the menu the way it opened ────────────────────────────── */
+
+main > ul::after {
+  height: 14px;
+  border-bottom: none;
+  margin: 1.4rem auto 0.6rem;
+  width: 190px;
+  background-image:
+    linear-gradient(var(--crust), var(--crust)),
+    linear-gradient(var(--crust), var(--crust)),
+    radial-gradient(circle, var(--tomato) 4px, transparent 5px);
+  background-size: 78px 2px, 78px 2px, 14px 14px;
+  background-position: left center, right center, center center;
+  background-repeat: no-repeat;
+}
+
+/* ── The scroll track should belong to the room ──────────────────── */
+
+.overflow-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--crust) transparent;
+  overflow-x: hidden !important;
+}
+
+.overflow-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.overflow-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.overflow-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--crust);
+  border: 3px solid var(--dough);
+  border-radius: 10px;
+}
+
+.overflow-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: var(--tomato);
+}
+
+/* ── Keyboard focus, in the house colours ────────────────────────── */
+
+*:focus-visible {
+  outline: 3px solid var(--tomato) !important;
+  outline-offset: 2px;
+}
+
+input:focus,
+textarea:focus {
+  --tw-ring-color: var(--tomato) !important;
+  border-color: var(--tomato) !important;
+}
+
+/* ── Order form: a docket on the counter ─────────────────────────── */
+
+main form label {
+  font-family: Bevan, Georgia, serif;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.04em;
+  color: var(--char);
+}
+
+main form input[type='checkbox'] {
+  width: 1.15rem;
+  height: 1.15rem;
+  accent-color: var(--tomato);
+}
+
+/* Anything the app paints red for an error keeps the warning colour. */
+p[class*='text-red-700'] {
+  font-family: Lora, Georgia, serif;
+  font-style: italic;
+}
+
+/* ── The quantity stepper ────────────────────────────────────────
+   The markup is button / span / button, each sized by its own padding,
+   so a hyphen came out narrower than a plus. Fixed squares and a shared
+   frame turn the three pieces into one control. */
+
+div:has(> button + span + button) {
+  gap: 0 !important;
+  border: 2px solid var(--char);
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 3px 3px 0 var(--char);
+  align-self: center;
+}
+
+div:has(> button + span + button) > button {
+  width: 2.4rem;
+  height: 2.4rem;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: Lora, Georgia, serif !important;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1;
+  /* The glyphs sit off-centre optically; nudge them back. */
+  padding-bottom: 0.14rem !important;
+  transition: background-color 0.15s ease;
+}
+
+/* Inside a shared frame the stamped lift would break the group apart. */
+div:has(> button + span + button) > button:hover {
+  background-color: var(--tomato-dark) !important;
+  transform: none;
+  box-shadow: none !important;
+}
+
+div:has(> button + span + button) > button:active {
+  background-color: #6d120c !important;
+  transform: none;
+  box-shadow: none !important;
+}
+
+/* The count is the window between the two keys. */
+div:has(> button + span + button) > span {
+  align-self: stretch;
+  min-width: 2.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--paper);
+  border-left: 2px solid var(--char);
+  border-right: 2px solid var(--char);
+
+  font-family: Lora, Georgia, serif !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  font-variant-numeric: tabular-nums;
+  color: var(--char);
+}
+
+@media (max-width: 640px) {
+  div:has(> button + span + button) > button {
+    width: 2.1rem;
+    height: 2.1rem;
+    font-size: 1.25rem;
+  }
+
+  div:has(> button + span + button) > span {
+    min-width: 2.3rem;
+  }
+}
+
+/* ── An empty cart is an invitation, not a dead end ──────────────── */
+
+main > div > p.mt-7 {
+  position: relative;
+  max-width: 30rem;
+  margin-top: 2.4rem !important;
+  padding: 3.2rem 1.8rem 2rem;
+  text-align: center;
+
+  background-color: var(--paper);
+  border: 2px dashed var(--crust);
+  border-radius: 4px;
+
+  font-family: Lora, Georgia, serif;
+  font-weight: 400 !important;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--char);
+}
+
+/* An empty plate sitting above the message. */
+main > div > p.mt-7::before {
+  content: '';
+  position: absolute;
+  top: -1.9rem;
+  left: 50%;
+  width: 3.8rem;
+  height: 3.8rem;
+  margin-left: -1.9rem;
+  border-radius: 50%;
+  background-color: var(--dough);
+  border: 3px solid var(--char);
+  box-shadow: 0 0 0 5px var(--paper), 0 0 0 7px var(--crust);
+}
