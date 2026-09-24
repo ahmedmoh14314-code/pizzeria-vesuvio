@@ -169,6 +169,8 @@ Responsive to 375px, with a visible focus ring on everything interactive.
 
 <div align="center">
 
+Built by hand, component by component — the React, the Redux slices, the loaders and actions, and the CSS design system behind all of it.
+
 **Ahmed** · [github.com/ahmedmoh14314-code](https://github.com/ahmedmoh14314-code)
 
 </div>
