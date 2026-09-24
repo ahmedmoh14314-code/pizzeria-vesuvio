@@ -167,8 +167,6 @@ Responsive to 375px, with a visible focus ring on everything interactive.
 
 ---
 
-Architecture follows *The Ultimate React Course* by Jonas Schmedtmann, which I worked through while building this. The API and the pizza photography are his. The design, the CSS behind it and the notes above are mine.
-
 <div align="center">
 
 **Ahmed** · [github.com/ahmedmoh14314-code](https://github.com/ahmedmoh14314-code)
