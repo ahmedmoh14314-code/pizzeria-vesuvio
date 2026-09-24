@@ -16,6 +16,14 @@ React 18 · Redux Toolkit · React Router 6 data APIs · Tailwind + custom CSS
 
 ---
 
+## Project context
+
+Built while working through Jonas Schmedtmann's Ultimate React Course. I wrote the React, Redux Toolkit and React Router implementation in this repository myself, following the project's learning sequence. The course supplied the brief and the order in which the ideas arrive; the code here is the implementation I worked through.
+
+The Pizzeria Vesuvio visual direction is my own adaptation rather than the course design, and that CSS layer was built with AI assistance.
+
+---
+
 ## The flow
 
 <table>
@@ -129,7 +137,7 @@ The point of the repo is not that Redux is installed. It is that I can say what 
 | React Router 6.11 | `createBrowserRouter`, `loader`, `action`, `useNavigation`, `useActionData`, `errorElement` |
 | Redux Toolkit 2 | `configureStore`, `createSlice`, `createAsyncThunk`, selectors |
 | Tailwind CSS 3 | utility layer, remapped theme, breakpoints |
-| Custom CSS | about 1000 lines carrying the visual identity |
+| Custom CSS | about 900 lines carrying the visual identity |
 | Vite 4 | dev server and build |
 | `Intl` | currency and dates, no date library |
 
@@ -155,7 +163,7 @@ src/
 └── App.jsx        the route tree
 ```
 
-Every `fetch` lives in `services/` and is called from a loader, an action or a thunk, never from a component. Every data route declares its own `errorElement`, so a failed menu request breaks that route and not the app.
+Every `fetch` lives in `services/` and is called from a loader, an action or a thunk, never from a component. The routes that load data declare their own `errorElement` and the layout route catches the rest, so a failed menu request breaks that route and not the app.
 
 ## The design
 
@@ -163,15 +171,11 @@ Red gingham header, black enamel wall sign, paper menu card, pizzas plated on ce
 
 It was built under two rules. The markup was off limits, so the whole restyle happens in `tailwind.config.js` and `index.css`: the theme is remapped so the same `bg-yellow-400` now resolves to tomato red, and the rest is descendant selectors, `::before` / `::after` and `:has()`. And no images for the chrome, so the gingham, the scalloped valance, the torn paper edge and the plate rings are gradients and shadows.
 
-Responsive to 375px, with a visible focus ring on everything interactive.
+Laid out for phone width first, with a visible focus ring on everything interactive.
 
 ---
 
 <div align="center">
-
-The application is written by hand, component by component: the React, the Redux slices, and the route loaders and actions.
-
-The visual design and the CSS layer on top of it were built with AI assistance.
 
 **Ahmed** · [github.com/ahmedmoh14314-code](https://github.com/ahmedmoh14314-code)
 
