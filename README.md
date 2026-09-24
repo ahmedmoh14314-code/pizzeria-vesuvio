@@ -161,7 +161,7 @@ Every `fetch` lives in `services/` and is called from a loader, an action or a t
 
 Red gingham header, black enamel wall sign, paper menu card, pizzas plated on ceramic rings, dotted price leaders, a stamped SOLD OUT, and a pinned paper docket that slides in when the cart fills.
 
-Two rules I worked under. The markup was off limits, so the whole restyle happens in `tailwind.config.js` and `index.css`: the theme is remapped so the same `bg-yellow-400` now resolves to tomato red, and the rest is descendant selectors, `::before` / `::after` and `:has()`. And no images for the chrome, so the gingham, the scalloped valance, the torn paper edge and the plate rings are gradients and shadows.
+It was built under two rules. The markup was off limits, so the whole restyle happens in `tailwind.config.js` and `index.css`: the theme is remapped so the same `bg-yellow-400` now resolves to tomato red, and the rest is descendant selectors, `::before` / `::after` and `:has()`. And no images for the chrome, so the gingham, the scalloped valance, the torn paper edge and the plate rings are gradients and shadows.
 
 Responsive to 375px, with a visible focus ring on everything interactive.
 
@@ -169,7 +169,9 @@ Responsive to 375px, with a visible focus ring on everything interactive.
 
 <div align="center">
 
-Built by hand, component by component — the React, the Redux slices, the loaders and actions, and the CSS design system behind all of it.
+The application is written by hand, component by component: the React, the Redux slices, and the route loaders and actions.
+
+The visual design and the CSS layer on top of it were built with AI assistance.
 
 **Ahmed** · [github.com/ahmedmoh14314-code](https://github.com/ahmedmoh14314-code)
 
